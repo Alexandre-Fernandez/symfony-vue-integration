@@ -2,29 +2,39 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[ApiResource(
+	normalizationContext: ["groups" => ["read:Product"]]
+)]
 class Product
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+	#[Groups(["read:Product", "read:Order"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+	#[Groups(["read:Product", "read:Order"])]
     private $name;
 
     #[ORM\Column(type: 'text', nullable: true)]
+	#[Groups(["read:Product", "read:Order"])]
     private $description;
 
     #[ORM\Column(type: 'float')]
+	#[Groups(["read:Product", "read:Order"])]
     private $price;
 
     #[ORM\ManyToMany(targetEntity: ProductOption::class, inversedBy: 'products')]
+	#[Groups(["read:Product"])]
     private $options;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderDetail::class)]

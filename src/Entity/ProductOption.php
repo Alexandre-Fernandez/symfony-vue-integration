@@ -6,6 +6,7 @@ use App\Repository\ProductOptionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductOptionRepository::class)]
 class ProductOption
@@ -16,19 +17,23 @@ class ProductOption
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+	#[Groups(["read:Product"])]
     private $directive;
 
     #[ORM\Column(type: 'integer')]
+	#[Groups(["read:Product"])]
     private $allowedChoices;
 
     #[ORM\Column(type: 'boolean')]
+	#[Groups(["read:Product"])]
     private $isRequired;
+
+    #[ORM\ManyToMany(targetEntity: OptionChoice::class, inversedBy: 'options')]
+	#[Groups(["read:Product"])]
+    private $choices;
 
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'options')]
     private $products;
-
-    #[ORM\ManyToMany(targetEntity: OptionChoice::class, inversedBy: 'options')]
-    private $choices;
 
     public function __construct()
     {

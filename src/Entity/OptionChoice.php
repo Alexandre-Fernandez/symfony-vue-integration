@@ -6,6 +6,7 @@ use App\Repository\OptionChoiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: OptionChoiceRepository::class)]
 class OptionChoice
@@ -16,12 +17,15 @@ class OptionChoice
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+	#[Groups(["read:Product", "read:Order"])]
     private $name;
 
     #[ORM\Column(type: 'float')]
+	#[Groups(["read:Product", "read:Order"])]
     private $extraPrice;
 
     #[ORM\Column(type: 'boolean')]
+	#[Groups(["read:Product"])]
     private $isMultiple;
 
     #[ORM\ManyToMany(targetEntity: ProductOption::class, mappedBy: 'choices')]

@@ -6,6 +6,7 @@ use App\Repository\OrderDetailRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: OrderDetailRepository::class)]
 class OrderDetail
@@ -16,9 +17,11 @@ class OrderDetail
     private $id;
 
     #[ORM\Column(type: 'integer')]
+	#[Groups(["read:Order"])]
     private $quantity;
 
     #[ORM\Column(type: 'float')]
+	#[Groups(["read:Order"])]
     private $priceEach;
 
     #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'details')]
@@ -27,9 +30,11 @@ class OrderDetail
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'orderDetails')]
     #[ORM\JoinColumn(nullable: false)]
+	#[Groups(["read:Order"])]
     private $product;
 
     #[ORM\ManyToMany(targetEntity: OptionChoice::class, inversedBy: 'orderDetails')]
+	#[Groups(["read:Order"])]
     private $optionChoices;
 
     public function __construct()

@@ -2,35 +2,46 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
+#[ApiResource(
+	normalizationContext: ["groups" => ["read:Order"]]
+)]
 class Order
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+	#[Groups(["read:Order"])]
     private $id;
 
     #[ORM\Column(type: 'datetime_immutable')]
+	#[Groups(["read:Order"])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+	#[Groups(["read:Order"])]
     private $deliveredAt;
 
     #[ORM\OneToMany(mappedBy: 'orderObj', targetEntity: OrderDetail::class)]
+	#[Groups(["read:Order"])]
     private $details;
 
     #[ORM\ManyToOne(targetEntity: UserAddress::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
+	#[Groups(["read:Order"])]
     private $address;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
+	#[Groups(["read:Order"])]
     private $user;
 
     public function __construct()
