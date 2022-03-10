@@ -80,10 +80,9 @@ class AppFixtures extends Fixture
 		foreach($productOptions as $productOption) {
 			$maxChoices = $productOption->getAllowedChoices();
 			// 0 allowedChoices means no choice limit, in other words maximum :
-			if($maxChoices === 0) $maxChoices = $this->maxOptionsPerProduct;
+			if($maxChoices === 0) $maxChoices = $this->maxChoicesPerOption;
 			$isMultiple = (bool)rand(0, 1);
-
-			for($i = 0; $i < rand($maxChoices, $this->maxOptionsPerProduct); $i++) {
+			for($i = 0; $i < rand($maxChoices, $this->maxChoicesPerOption); $i++) {
 				$extraPrice = $this->priceRand(0, $this->maxChoiceExtraPrice);
 				if($extraPrice < 1) $extraPrice = 0;
 
