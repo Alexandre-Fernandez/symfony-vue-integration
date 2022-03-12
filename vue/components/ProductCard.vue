@@ -1,6 +1,6 @@
 <template>
 	<article>
-		<img :src="`/image/product/${picture}`" />
+		<img :src="picture" />
 		<h3>{{ name }}</h3>
 		<p>{{ description }}</p>
 		<strong>

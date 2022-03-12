@@ -41,19 +41,19 @@ class AppFixtures extends Fixture
 				"Menu El Taquito", "El-Taquito.png", 8.48
 			),
 			$this->productManager->createProduct(
-				"Menu El Classico", "El-Classico.png", 10.99
+				"Menu El Classico", "El-Classico.jpg", 10.99
 			),
 			$this->productManager->createProduct(
-				"Menu El Tacon", "El-Tacon.png", 13.99
+				"Menu El Tacon", "El-Tacon.jpg", 13.99
 			),
 			$this->productManager->createProduct(
 				"El Taquito", "El-Taquito.png", 6.99, "A small taco for a big kid"
 			),
 			$this->productManager->createProduct(
-				"El Classico", "El-Classico.png", 9.5, "You can't go wrong with this one"
+				"El Classico", "El-Classico.jpg", 9.5, "You can't go wrong with this one"
 			),
 			$this->productManager->createProduct(
-				"El Tacon", "El-Tacon.png", 12.5, "Let's hope you're hungry"
+				"El Tacon", "El-Tacon.jpg", 12.5, "Let's hope you're hungry"
 			),
 		];
 
