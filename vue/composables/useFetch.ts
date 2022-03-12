@@ -37,21 +37,21 @@ const useFetch = <D = any>(useCache = false, cacheExpiration = 43200000) => {
 				throw res.statusText
 			}
 			if (!isMounted) return
-
 			const text = await res.text()
-			if (!text) return (data.value = { content: null })
-
-			const content = (getJson(text) ?? text) as D
-			if (useCache) {
-				localStorage.setItem(
-					url,
-					JSON.stringify({
-						data: content,
-						expiration: Date.now() + cacheExpiration
-					} as CachedData<D>)
-				)
+			if (!text) data.value = { content: null }
+			else {
+				const content = (getJson(text) ?? text) as D
+				if (useCache) {
+					localStorage.setItem(
+						url,
+						JSON.stringify({
+							data: content,
+							expiration: Date.now() + cacheExpiration
+						} as CachedData<D>)
+					)
+				}
+				data.value = { content }
 			}
-			data.value = { content }
 		} catch (err) {
 			if (!isMounted) return
 			error.value = { code: errorCode, content: String(err) }
