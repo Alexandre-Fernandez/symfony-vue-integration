@@ -14,18 +14,19 @@ class OptionChoice
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+	#[Groups(["read:Product"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-	#[Groups(["read:Product", "read:Order"])]
+	#[Groups(["read:Product", "read:Order", "read:ProductOption"])]
     private $name;
 
     #[ORM\Column(type: 'float')]
-	#[Groups(["read:Product", "read:Order"])]
+	#[Groups(["read:Product", "read:Order", "read:ProductOption"])]
     private $extraPrice;
 
     #[ORM\Column(type: 'boolean')]
-	#[Groups(["read:Product"])]
+	#[Groups(["read:Product", "read:ProductOption"])]
     private $isMultiple;
 
     #[ORM\ManyToMany(targetEntity: ProductOption::class, mappedBy: 'choices')]

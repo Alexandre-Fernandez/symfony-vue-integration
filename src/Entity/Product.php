@@ -11,7 +11,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ApiResource(
-	normalizationContext: ["groups" => ["read:Product"]]
+	paginationItemsPerPage: 10,
+	normalizationContext: ["groups" => ["read:Product"]],
+	denormalizationContext: ["groups" => ["write:Product"]]
 )]
 class Product
 {
@@ -22,23 +24,27 @@ class Product
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-	#[Groups(["read:Product", "read:Order"])]
+	#[Groups(["read:Product", "read:Order", "write:Product"])]
     private $name;
 
     #[ORM\Column(type: 'text', nullable: true)]
-	#[Groups(["read:Product", "read:Order"])]
+	#[Groups(["read:Product", "read:Order", "write:Product"])]
     private $description;
 
     #[ORM\Column(type: 'float')]
-	#[Groups(["read:Product", "read:Order"])]
+	#[Groups(["read:Product", "read:Order", "write:Product"])]
     private $price;
 
     #[ORM\ManyToMany(targetEntity: ProductOption::class, inversedBy: 'products')]
-	#[Groups(["read:Product"])]
+	#[Groups(["read:Product", "write:Product"])]
     private $options;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderDetail::class)]
     private $orderDetails;
+
+    #[ORM\Column(type: 'string', length: 255)]
+	#[Groups(["read:Product", "read:Order", "write:Product"])]
+    private $picture;
 
     public function __construct()
     {
@@ -137,6 +143,18 @@ class Product
                 $orderDetail->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }

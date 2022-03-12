@@ -8,7 +8,8 @@ use App\Entity\ProductOption;
 
 class ProductManager {
 	public function createProduct(
-		string $name, 
+		string $name,
+		string $picture, 
 		float $price,
 		?string $description = null
 	): Product {
@@ -16,6 +17,7 @@ class ProductManager {
 		if($description) $product->setDescription($description);
 		$product
 			->setName($name)
+			->setPicture($picture)
 			->setPrice($price)
 		;
 		return $product;
